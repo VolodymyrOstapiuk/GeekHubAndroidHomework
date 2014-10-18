@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="titles">
+        <item>Activity</item>
+        <item>Fragments</item>
+        <item>Loaders</item>
+        <item>Tasks and Back Stack</item>
+        <item>Overview screen</item>
+        <item>Services</item>
+        <item>Bound services</item>
+        <item>AIDL</item>
+        <item>Content Providers</item>
+        <item>App Widgets</item>
+    </array>
+    <array name="doc">
+        <item>
+            Activities
+
+            Activity is an application component that provides a screen with which users can
+            interact in order to do something, such as dial the phone, take a photo, send an email,
+            or view a map. Each activity is given a window in which to draw its user interface. The
+            window typically fills the screen, but may be smaller than the screen and float on top
+            of other windows.
+
+            An application usually consists of multiple activities that are loosely bound to each
+            other. Typically, one activity in an application is specified as the "main" activity,
+            which is presented to the user when launching the application for the first time. Each
+            activity can then start another activity in order to perform different actions. Each
+            time a new activity starts, the previous activity is stopped, but the system preserves
+            the activity in a stack (the "back stack"). When a new activity starts, it is pushed
+            onto the back stack and takes user focus. The back stack abides to the basic "last in,
+            first out" stack mechanism, so, when the user is done with the current activity and
+            presses the Back button, it is popped from the stack (and destroyed) and the previous
+            activity resumes. (The back stack is discussed more in the Tasks and Back Stack
+            document.)
+
+            When an activity is stopped because a new activity starts, it is notified of this change
+            in state through the activity\'s lifecycle callback methods. There are several callback
+            methods that an activity might receive, due to a change in its state—whether the system
+            is creating it, stopping it, resuming it, or destroying it—and each callback provides
+            you the opportunity to perform specific work that\'s appropriate to that state change.
+            For instance, when stopped, your activity should release any large objects, such as
+            network or database connections. When the activity resumes, you can reacquire the
+            necessary resources and resume actions that were interrupted. These state transitions
+            are all part of the activity lifecycle
+        </item>
+        <item>
+            Fragments
+
+            A Fragment represents a behavior or a portion of user interface in an Activity. You can
+            combine multiple fragments in a single activity to build a multi-pane UI and reuse a
+            fragment in multiple activities. You can think of a fragment as a modular section of an
+            activity, which has its own lifecycle, receives its own input events, and which you can
+            add or remove while the activity is running (sort of like a "sub activity" that you can
+            reuse in different activities).
+
+            A fragment must always be embedded in an activity and the fragment\'s lifecycle is
+            directly affected by the host activity\'s lifecycle. For example, when the activity is
+            paused, so are all fragments in it, and when the activity is destroyed, so are all
+            fragments. However, while an activity is running (it is in the resumed lifecycle state),
+            you can manipulate each fragment independently, such as add or remove them. When you
+            perform such a fragment transaction, you can also add it to a back stack that\'s managed
+            by the activity—each back stack entry in the activity is a record of the fragment
+            transaction that occurred. The back stack allows the user to reverse a fragment
+            transaction (navigate backwards), by pressing the Back button.
+
+            When you add a fragment as a part of your activity layout, it lives in a ViewGroup
+            inside the activity\'s view hierarchy and the fragment defines its own view layout. You
+            can insert a fragment into your activity layout by declaring the fragment in the
+            activity\'s layout file, as a {<fragment></fragment>} element, or from your application
+            code by adding it to an existing ViewGroup. However, a fragment is not required to be a
+            part of the activity layout; you may also use a fragment without its own UI as an
+            invisible worker for the activity.
+        </item>
+        <item>
+            Loaders
+
+            Introduced in Android 3.0, loaders make it easy to asynchronously load data in an
+            activity or fragment. Loaders have these characteristics:
+
+            They are available to every Activity and Fragment.
+
+            They provide asynchronous loading of data.
+
+            They monitor the source of their data and deliver new results when the content changes.
+
+            They automatically reconnect to the last loader\'s cursor when being recreated after a
+            configuration change. Thus, they don\'t need to re-query their data.
+        </item>
+        <item>
+            Tasks and Back Stack
+
+            An application usually contains multiple activities. Each activity should be designed
+            around a specific kind of action the user can perform and can start other activities.
+            For example, an email application might have one activity to show a list of new
+            messages. When the user selects a message, a new activity opens to view that message.
+
+            An activity can even start activities that exist in other applications on the device.
+            For example, if your application wants to send an email message, you can define an
+            intent to perform a "send" action and include some data, such as an email address and a
+            message. An activity from another application that declares itself to handle this kind
+            of intent then opens. In this case, the intent is to send an email, so an email
+            application\'s "compose" activity starts (if multiple activities support the same
+            intent, then the system lets the user select which one to use). When the email is sent,
+            your activity resumes and it seems as if the email activity was part of your
+            application. Even though the activities may be from different applications, Android
+            maintains this seamless user experience by keeping both activities in the same task.
+
+            A task is a collection of activities that users interact with when performing a certain
+            job. The activities are arranged in a stack (the back stack), in the order in which each
+            activity is opened.
+
+            The device Home screen is the starting place for most tasks. When the user touches an
+            icon in the application launcher (or a shortcut on the Home screen), that application\'s
+            task comes to the foreground. If no task exists for the application (the application has
+            not been used recently), then a new task is created and the "main" activity for that
+            application opens as the root activity in the stack.
+
+            When the current activity starts another, the new activity is pushed on the top of the
+            stack and takes focus. The previous activity remains in the stack, but is stopped. When
+            an activity stops, the system retains the current state of its user interface. When the
+            user presses the Back button, the current activity is popped from the top of the stack
+            (the activity is destroyed) and the previous activity resumes (the previous state of its
+            UI is restored). Activities in the stack are never rearranged, only pushed and popped
+            from the stack—pushed onto the stack when started by the current activity and popped off
+            when the user leaves it using the Back button. As such, the back stack operates as a
+            "last in, first out" object structure. Figure 1 visualizes this behavior with a timeline
+            showing the progress between activities along with the current back stack at each point
+            in time.
+        </item>
+        <item>
+            Overview Screen
+
+            The overview screen (also referred to as the recents screen, recent task list, or recent
+            apps) is a system-level UI that lists recently accessed activities and tasks. The user
+            can navigate through the list and select a task to resume, or the user can remove a task
+            from the list by swiping it away. With the Android 5.0 release (API level 21), multiple
+            instances of the same activity containing different documents may appear as tasks in the
+            overview screen. For example, Google Drive may have a task for each of several Google
+            documents. Each document appears as a task in the overview screen.
+        </item>
+        <item>
+            Services
+
+            A Service is an application component that can perform long-running operations in the
+            background and does not provide a user interface. Another application component can
+            start a service and it will continue to run in the background even if the user switches
+            to another application. Additionally, a component can bind to a service to interact with
+            it and even perform interprocess communication (IPC). For example, a service might
+            handle network transactions, play music, perform file I/O, or interact with a content
+            provider, all from the background.
+
+            A service can essentially take two forms:
+
+            Started
+
+            A service is "started" when an application component (such as an activity) starts it by
+            calling startService(). Once started, a service can run in the background indefinitely,
+            even if the component that started it is destroyed. Usually, a started service performs
+            a single operation and does not return a result to the caller. For example, it might
+            download or upload a file over the network. When the operation is done, the service
+            should stop itself.
+            Bound
+
+            A service is "bound" when an application component binds to it by calling bindService().
+            A bound service offers a client-server interface that allows components to interact with
+            the service, send requests, get results, and even do so across processes with
+            interprocess communication (IPC). A bound service runs only as long as another
+            application component is bound to it. Multiple components can bind to the service at
+            once, but when all of them unbind, the service is destroyed.
+            Although this documentation generally discusses these two types of services separately,
+            your service can work both ways—it can be started (to run indefinitely) and also allow
+            binding. It\'s simply a matter of whether you implement a couple callback methods:
+            onStartCommand() to allow components to start it and onBind() to allow binding.
+        </item>
+        <item>
+            Bound Services
+
+            A bound service is the server in a client-server interface. A bound service allows
+            components (such as activities) to bind to the service, send requests, receive
+            responses, and even perform interprocess communication (IPC). A bound service typically
+            lives only while it serves another application component and does not run in the
+            background indefinitely.
+
+            This document shows you how to create a bound service, including how to bind to the
+            service from other application components. However, you should also refer to the
+            Services document for additional information about services in general, such as how to
+            deliver notifications from a service, set the service to run in the foreground, and
+            more.
+        </item>
+        <item>
+            Android Interface Definition Language (AIDL)
+
+            AIDL (Android Interface Definition Language) is similar to other IDLs you might have
+            worked with. It allows you to define the programming interface that both the client and
+            service agree upon in order to communicate with each other using interprocess
+            communication (IPC). On Android, one process cannot normally access the memory of
+            another process. So to talk, they need to decompose their objects into primitives that
+            the operating system can understand, and marshall the objects across that boundary for
+            you. The code to do that marshalling is tedious to write, so Android handles it for you
+            with AIDL.
+        </item>
+        <item>
+            Content Providers
+
+            Content providers manage access to a structured set of data. They encapsulate the data,
+            and provide mechanisms for defining data security. Content providers are the standard
+            interface that connects data in one process with code running in another process.
+
+            When you want to access data in a content provider, you use the ContentResolver object
+            in your application\'s Context to communicate with the provider as a client. The
+            ContentResolver object communicates with the provider object, an instance of a class
+            that implements ContentProvider. The provider object receives data requests from
+            clients, performs the requested action, and returns the results.
+
+            You don\'t need to develop your own provider if you don\'t intend to share your data
+            with other applications. However, you do need your own provider to provide custom search
+            suggestions in your own application. You also need your own provider if you want to copy
+            and paste complex data or files from your application to other applications.
+
+            Android itself includes content providers that manage data such as audio, video, images,
+            and personal contact information. You can see some of them listed in the reference
+            documentation for the android.provider package. With some restrictions, these providers
+            are accessible to any Android application.
+        </item>
+        <item>
+
+            App Widgets are miniature application views that can be embedded in other applications
+            (such as the Home screen) and receive periodic updates. These views are referred to as
+            Widgets in the user interface, and you can publish one with an App Widget provider. An
+            application component that is able to hold other App Widgets is called an App Widget
+            host.
+        </item>
+    </array>
+
+
+</resources>
