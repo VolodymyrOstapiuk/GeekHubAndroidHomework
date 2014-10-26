@@ -3,6 +3,7 @@ package ua.ck.ostapiuk.geekhubhomework1;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceScreen;
 import android.view.Menu;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements DocTitlesFragment.OnDocTitleSelectedListener {
     private FragmentManager manager;
-
+    private boolean dualPane;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +23,10 @@ public class MainActivity extends Activity implements DocTitlesFragment.OnDocTit
         manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.container, docTitlesFragment);
+        if (findViewById(R.id.doc_container) != null) {
+            DocFragment docFragment = new DocFragment();
+            transaction.add(R.id.doc_container, docFragment);
+        }
         transaction.commit();
     }
 
@@ -47,6 +52,17 @@ public class MainActivity extends Activity implements DocTitlesFragment.OnDocTit
 
     @Override
     public void onDocTitleSelected(int position) {
+        if (findViewById(R.id.doc_container) != null) {
+            FragmentTransaction transaction = manager.beginTransaction();
+            Bundle args = new Bundle();
+            args.putInt(DocFragment.DOC_ID, position);
+            DocFragment docFragment = new DocFragment();
+            docFragment.setArguments(args);
+            transaction.replace(R.id.doc_container, docFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+
+        } else {
         FragmentTransaction transaction = manager.beginTransaction();
         Bundle args = new Bundle();
         args.putInt(DocFragment.DOC_ID, position);
@@ -55,5 +71,6 @@ public class MainActivity extends Activity implements DocTitlesFragment.OnDocTit
         transaction.replace(R.id.container, docFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+        }
     }
 }
