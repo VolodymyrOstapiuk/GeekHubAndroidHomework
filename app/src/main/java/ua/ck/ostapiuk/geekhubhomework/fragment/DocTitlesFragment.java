@@ -62,7 +62,7 @@ public class DocTitlesFragment extends ListFragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getTitlesFromID(getArguments().getInt(TITTLES_ID));
+        getDocsFromID(getArguments().getInt(TITTLES_ID));
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.listview_doctitles_template, R.id.textViewList, titles);
         setListAdapter(adapter);
     }
@@ -74,23 +74,23 @@ public class DocTitlesFragment extends ListFragment {
     }
 
     public void updateTitleList(int id) {
-        getTitlesFromID(id);
+        getDocsFromID(id);
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.listview_doctitles_template, R.id.textViewList, titles);
         setListAdapter(adapter);
     }
 
-    public void getTitlesFromID(int ID) {
-        TypedArray titlesArray = getResources().obtainTypedArray(R.array.titles);
-        allTitles = new String[titlesArray.length()][];
-        for (int i = 0; i < titlesArray.length(); ++i) {
-            int id = titlesArray.getResourceId(i, 0);
+    public void getDocsFromID(int ID) {
+        TypedArray docsArray = getResources().obtainTypedArray(R.array.titles);
+        allTitles = new String[docsArray.length()][];
+        for (int i = 0; i < docsArray.length(); ++i) {
+            int id = docsArray.getResourceId(i, 0);
             if (id > 0) {
                 allTitles[i] = getResources().getStringArray(id);
             } else {
                 // something wrong with the XML
             }
         }
-        titlesArray.recycle(); // Important!
+        docsArray.recycle(); // Important!
         titles = allTitles[ID];
     }
 }
