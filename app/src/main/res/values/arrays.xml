@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="titles">
-        <item>Activity</item>
+    <array name="AppComponentsTittles">
+    <item>Activity</item>
         <item>Fragments</item>
         <item>Loaders</item>
         <item>Tasks and Back Stack</item>
@@ -12,8 +12,8 @@
         <item>Content Providers</item>
         <item>App Widgets</item>
     </array>
-    <array name="doc">
-        <item>
+    <array name="AppComponentsDoc">
+    <item>
             Activities
 
             Activity is an application component that provides a screen with which users can
@@ -232,6 +232,149 @@
             host.
         </item>
     </array>
+    <array name="AppResources">
+        <item>
+            Providing Resources
 
+            You should always externalize application resources such as images and strings from your
+            code, so that you can maintain them independently. You should also provide alternative
+            resources for specific device configurations, by grouping them in specially-named
+            resource directories. At runtime, Android uses the appropriate resource based on the
+            current configuration. For example, you might want to provide a different UI layout
+            depending on the screen size or different strings depending on the language setting.
 
+            Once you externalize your application resources, you can access them using resource IDs
+            that are generated in your project\'s R class. How to use resources in your application
+            is discussed in Accessing Resources. This document shows you how to group your resources
+            in your Android project and provide alternative resources for specific device
+            configurations.
+        </item>
+        <item>
+            Accessing Resources
+
+            Once you provide a resource in your application (discussed in Providing Resources), you
+            can apply it by referencing its resource ID. All resource IDs are defined in your
+            project\'s R class, which the aapt tool automatically generates.
+
+            When your application is compiled, aapt generates the R class, which contains resource
+            IDs for all the resources in your res/ directory. For each type of resource, there is an
+            R subclass (for example, R.drawable for all drawable resources), and for each resource
+            of that type, there is a static integer (for example, R.drawable.icon). This integer is
+            the resource ID that you can use to retrieve your resource.
+
+            Although the R class is where resource IDs are specified, you should never need to look
+            there to discover a resource ID. A resource ID is always composed of:
+
+            The resource type: Each resource is grouped into a "type," such as string, drawable, and
+            layout. For more about the different types, see Resource Types.
+            The resource name, which is either: the filename, excluding the extension; or the value
+            in the XML android:name attribute, if the resource is a simple value (such as a string).
+            There are two ways you can access a resource:
+
+            In code: Using a static integer from a sub-class of your R class, such as:
+            R.string.hello
+            string is the resource type and hello is the resource name. There are many Android APIs
+            that can access your resources when you provide a resource ID in this format. See
+            Accessing Resources in Code.
+            In XML: Using a special XML syntax that also corresponds to the resource ID defined in
+            your R class, such as:
+            @string/hello
+            string is the resource type and hello is the resource name. You can use this syntax in
+            an XML resource any place where a value is expected that you provide in a resource. See
+            Accessing Resources from XML.
+        </item>
+        <item>
+            Handling Runtime Changes
+
+            Some device configurations can change during runtime (such as screen orientation,
+            keyboard availability, and language). When such a change occurs, Android restarts the
+            running Activity (onDestroy() is called, followed by onCreate()). The restart behavior
+            is designed to help your application adapt to new configurations by automatically
+            reloading your application with alternative resources that match the new device
+            configuration.
+
+            To properly handle a restart, it is important that your activity restores its previous
+            state through the normal Activity lifecycle, in which Android calls
+            onSaveInstanceState() before it destroys your activity so that you can save data about
+            the application state. You can then restore the state during onCreate() or
+            onRestoreInstanceState().
+
+            To test that your application restarts itself with the application state intact, you
+            should invoke configuration changes (such as changing the screen orientation) while
+            performing various tasks in your application. Your application should be able to restart
+            at any time without loss of user data or state in order to handle events such as
+            configuration changes or when the user receives an incoming phone call and then returns
+            to your application much later after your application process may have been destroyed.
+            To learn how you can restore your activity state, read about the Activity lifecycle.
+
+            However, you might encounter a situation in which restarting your application and
+            restoring significant amounts of data can be costly and create a poor user experience.
+            In such a situation, you have two other options:
+
+            Retain an object during a configuration change
+            Allow your activity to restart when a configuration changes, but carry a stateful object
+            to the new instance of your activity.
+            Handle the configuration change yourself
+            Prevent the system from restarting your activity during certain configuration changes,
+            but receive a callback when the configurations do change, so that you can manually
+            update your activity as necessary.
+        </item>
+
+    </array>
+    <array name="Computation">
+        <item>
+            RenderScript
+
+            RenderScript is a framework for running computationally intensive tasks at high
+            performance on Android. RenderScript is primarily oriented for use with data-parallel
+            computation, although serial computationally intensive workloads can benefit as well.
+            The RenderScript runtime will parallelize work across all processors available on a
+            device, such as multi-core CPUs, GPUs, or DSPs, allowing you to focus on expressing
+            algorithms rather than scheduling work or load balancing. RenderScript is especially
+            useful for applications performing image processing, computational photography, or
+            computer vision.
+
+            To begin with RenderScript, there are two main concepts you should understand:
+
+            High-performance compute kernels are written in a C99-derived language.
+            A Java API is used for managing the lifetime of RenderScript resources and controlling
+            kernel execution.
+        </item>
+        <item>
+            Advanced RenderScript
+
+            Because applications that utilize RenderScript still run inside of the Android VM, you
+            have access to all of the framework APIs that you are familiar with, but can utilize
+            RenderScript when appropriate. To facilitate this interaction between the framework and
+            the RenderScript runtime, an intermediate layer of code is also present to facilitate
+            communication and memory management between the two levels of code. This document goes
+            into more detail about these different layers of code as well as how memory is shared
+            between the Android VM and RenderScript runtime.
+        </item>
+
+    </array>
+    <array name="AppResourcesTitles">
+        <item>Providing Resources</item>
+        <item>Accessing Resources</item>
+        <item>Handling Runtime Changes</item>
+    </array>
+    <array name="ComputationTitles">
+        <item>RenderScript</item>
+        <item>Advanced RenderScript</item>
+    </array>
+    <array name="Arrays">
+        <item>AppComponents</item>
+        <item>AppResources</item>
+        <item>Computation</item>
+    </array>
+    <array name="docs">
+        <item>@array/AppComponentsDoc</item>
+        <item>@array/AppResources</item>
+        <item>@array/Computation</item>
+    </array>
+    <array name="titles">
+        <item>@array/AppComponentsTittles</item>
+        <item>@array/AppResourcesTitles</item>
+        <item>@array/ComputationTitles</item>
+    </array>
 </resources>

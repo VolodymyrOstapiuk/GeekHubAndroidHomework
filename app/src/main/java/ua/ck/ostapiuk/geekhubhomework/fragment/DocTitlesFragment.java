@@ -1,8 +1,9 @@
-package ua.ck.ostapiuk.geekhubhomework1;
+package ua.ck.ostapiuk.geekhubhomework.fragment;
 
 
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import ua.ck.ostapiuk.geekhubhomework.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,17 +21,27 @@ import android.widget.ListView;
 public class DocTitlesFragment extends ListFragment {
     private OnDocTitleSelectedListener listener;
     private String[] titles;
+    private String[][] allTitles;
     private ArrayAdapter<String> adapter;
     private ListView listView;
+    public final static String TITTLES_ID = "Tittle_id";
 
     public DocTitlesFragment() {
         // Required empty public constructor
     }
 
     public interface OnDocTitleSelectedListener {
-        public void onDocTitleSelected(int position);
+        public void onDocTitleSelected(int position, int category);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Bundle args = getArguments();
+        if (args != null) {
+            updateTitleList(args.getInt(TITTLES_ID));
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,14 +62,35 @@ public class DocTitlesFragment extends ListFragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        titles = getResources().getStringArray(R.array.titles);
-        adapter = new ArrayAdapter<String>(getActivity(), R.layout.listview_template, R.id.textViewList, titles);
+        getTitlesFromID(getArguments().getInt(TITTLES_ID));
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.listview_doctitles_template, R.id.textViewList, titles);
         setListAdapter(adapter);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        listener.onDocTitleSelected(position);
+        listener.onDocTitleSelected(position, getArguments().getInt(TITTLES_ID));
+    }
+
+    public void updateTitleList(int id) {
+        getTitlesFromID(id);
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.listview_doctitles_template, R.id.textViewList, titles);
+        setListAdapter(adapter);
+    }
+
+    public void getTitlesFromID(int ID) {
+        TypedArray titlesArray = getResources().obtainTypedArray(R.array.titles);
+        allTitles = new String[titlesArray.length()][];
+        for (int i = 0; i < titlesArray.length(); ++i) {
+            int id = titlesArray.getResourceId(i, 0);
+            if (id > 0) {
+                allTitles[i] = getResources().getStringArray(id);
+            } else {
+                // something wrong with the XML
+            }
+        }
+        titlesArray.recycle(); // Important!
+        titles = allTitles[ID];
     }
 }
