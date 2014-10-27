@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">GeekHubHomework1</string>
+    <string name="app_name">GeekHubHomeworkOstapiuk</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="nav_drawer_title">Category</string>
+    <string name="title_activity_animations_examples">AnimationsExamplesActivity</string>
+    <string name="ret_main">Return to main</string>
+    <string name="anim_example">Animations Examples</string>
+    <string name="fade_in">Fade In</string>
+    <string name="fade_out">Fade Out</string>
+    <string name="blink">Blink</string>
+    <string name="zoom_in">Zoom In</string>
+    <string name="anim_text">Android Animated Text</string>
 </resources>

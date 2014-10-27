@@ -1,4 +1,4 @@
-package ua.ck.ostapiuk.geekhubhomework1;
+package ua.ck.ostapiuk.geekhubhomework;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
