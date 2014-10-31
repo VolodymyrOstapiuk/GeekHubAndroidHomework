@@ -69,7 +69,7 @@ public class AnimationsExamplesActivity extends Activity implements AnimationSel
             args.putInt(AnimationViewerFragment.ANIMATION_ID, id);
             AnimationViewerFragment animationViewerFragment = new AnimationViewerFragment();
             animationViewerFragment.setArguments(args);
-            transaction.replace(R.id.animation_container, animationViewerFragment);
+            transaction.replace(R.id.container, animationViewerFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         }
