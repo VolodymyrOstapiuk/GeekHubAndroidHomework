@@ -1,10 +1,11 @@
 package ua.ck.ostapiuk.geekhubhomework.activity;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.support.v4.app.FragmentManager;
 
 import java.lang.reflect.Array;
 
@@ -21,11 +23,12 @@ import ua.ck.ostapiuk.geekhubhomework.fragment.DocTitlesFragment;
 import ua.ck.ostapiuk.geekhubhomework.R;
 
 
-public class MainActivity extends Activity implements DocTitlesFragment.OnDocTitleSelectedListener {
-    private FragmentManager manager;
+public class MainActivity extends FragmentActivity implements DocTitlesFragment.OnDocTitleSelectedListener {
+
     private boolean dualPane;
     private DrawerLayout drawerLayout;
     private ListView drawerList;
+    private FragmentManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,18 +38,6 @@ public class MainActivity extends Activity implements DocTitlesFragment.OnDocTit
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_nav_drawer_template, R.id.textViewNavDrawer, getResources().getStringArray(R.array.Arrays));
         drawerList.setAdapter(adapter);
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
-        DocTitlesFragment docTitlesFragment = new DocTitlesFragment();
-        Bundle args = new Bundle();
-        args.putInt(DocTitlesFragment.TITTLES_ID, 0);
-        docTitlesFragment.setArguments(args);
-        manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.container, docTitlesFragment);
-        if (findViewById(R.id.doc_container) != null) {
-            DocFragment docFragment = new DocFragment();
-            transaction.add(R.id.doc_container, docFragment);
-        }
-        transaction.commit();
     }
 
 
@@ -72,27 +63,19 @@ public class MainActivity extends Activity implements DocTitlesFragment.OnDocTit
 
     @Override
     public void onDocTitleSelected(int position, int category) {
-        if (findViewById(R.id.doc_container) != null) {
-            FragmentTransaction transaction = manager.beginTransaction();
-            Bundle args = new Bundle();
-            args.putInt(DocFragment.DOC_ID, position);
-            args.putInt(DocFragment.DOC_ARRAY_ID, category);
-            DocFragment docFragment = new DocFragment();
-            docFragment.setArguments(args);
-            transaction.replace(R.id.doc_container, docFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+        if (!getResources().getBoolean(R.bool.isTablet)) {
+            Intent intent = new Intent(this, DocumentationViewerActivity.class);
+            intent.putExtra(DocFragment.DOC_ID, position);
+            intent.putExtra(DocFragment.DOC_ARRAY_ID, category);
+            startActivity(intent);
 
         } else {
-        FragmentTransaction transaction = manager.beginTransaction();
         Bundle args = new Bundle();
         args.putInt(DocFragment.DOC_ID, position);
             args.putInt(DocFragment.DOC_ARRAY_ID, category);
-        DocFragment docFragment = new DocFragment();
-        docFragment.setArguments(args);
-        transaction.replace(R.id.container, docFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+            DocFragment docFragment = (DocFragment) getSupportFragmentManager().findFragmentById(R.id.doc_fragment);
+            docFragment.getDocsFromID(category);
+            docFragment.updateDoc(position);
         }
     }
 
@@ -118,13 +101,8 @@ public class MainActivity extends Activity implements DocTitlesFragment.OnDocTit
     }
 
     private void replaceDocTitlesFragmentWithArrayId(int id) {
-        DocTitlesFragment docTitlesFragment = new DocTitlesFragment();
-        Bundle args = new Bundle();
-        args.putInt(DocTitlesFragment.TITTLES_ID, id);
-        docTitlesFragment.setArguments(args);
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.container, docTitlesFragment);
-        transaction.commit();
+        DocTitlesFragment docTitlesFragment = (DocTitlesFragment) getSupportFragmentManager().findFragmentById(R.id.doc_titles_fragment);
+        docTitlesFragment.updateTitleList(id);
         drawerLayout.closeDrawer(Gravity.LEFT);
 
     }

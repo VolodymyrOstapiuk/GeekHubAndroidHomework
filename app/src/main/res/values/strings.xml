@@ -14,4 +14,7 @@
     <string name="blink">Blink</string>
     <string name="zoom_in">Zoom In</string>
     <string name="anim_text">Android Animated Text</string>
+    <string name="nav_drawer_open">Category</string>
+    <string name="title_activity_documentation_viewer">DocumentationViewerActivity</string>
+    <bool name="isTablet">false</bool>
 </resources>

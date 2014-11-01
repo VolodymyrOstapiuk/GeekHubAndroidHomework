@@ -10,17 +10,19 @@
         android:layout_height="fill_parent"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <FrameLayout
-            android:layout_width="0dp"
+        <fragment
+            class="ua.ck.ostapiuk.geekhubhomework.fragment.DocTitlesFragment"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_weight="20"
-            android:id="@+id/container"></FrameLayout>
+            android:id="@+id/doc_titles_fragment"></fragment>
 
-        <FrameLayout
+        <fragment
+            android:name="ua.ck.ostapiuk.geekhubhomework.fragment.DocFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="60"
-            android:id="@+id/doc_container"></FrameLayout>
+            android:layout_weight="80"
+            android:id="@+id/doc_fragment"></fragment>
     </LinearLayout>
 
     <ListView

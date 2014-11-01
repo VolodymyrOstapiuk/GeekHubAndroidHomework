@@ -18,7 +18,10 @@
         </activity>
         <activity
             android:name=".activity.AnimationsExamplesActivity"
-            android:label="@string/title_activity_animations_examples"></activity>
+            android:label="@string/title_activity_animations_examples" />
+        <activity
+            android:name=".activity.DocumentationViewerActivity"
+            android:label="@string/title_activity_documentation_viewer"></activity>
     </application>
 
 </manifest>
