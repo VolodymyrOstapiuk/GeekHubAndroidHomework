@@ -21,7 +21,7 @@
             android:label="@string/title_activity_animations_examples" />
         <activity
             android:name=".activity.DocumentationViewerActivity"
-            android:label="@string/title_activity_documentation_viewer"></activity>
+            android:label="@string/app_name"></activity>
     </application>
 
 </manifest>

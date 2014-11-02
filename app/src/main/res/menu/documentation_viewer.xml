@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ua.ck.ostapiuk.geekhubhomework.activity.DocumentationViewerActivity">
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/action_animation_activity"
+        android:title="@string/anim_example"
         android:orderInCategory="100"
         android:showAsAction="never" />
 </menu>
