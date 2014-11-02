@@ -29,18 +29,41 @@ public class MainActivity extends FragmentActivity implements DocTitlesFragment.
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private FragmentManager manager;
+    private CharSequence mTitle;
+    private ActionBarDrawerToggle mDrawerToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mTitle = getTitle();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.drawer);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_nav_drawer_template, R.id.textViewNavDrawer, getResources().getStringArray(R.array.Arrays));
         drawerList.setAdapter(adapter);
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+            /**
+             * Called when a drawer has settled in a completely closed state.
+             */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu();
+            }
+
+            /**
+             * Called when a drawer has settled in a completely open state.
+             */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu();
+            }
+        };
+        drawerLayout.setDrawerListener(mDrawerToggle);
+
+
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

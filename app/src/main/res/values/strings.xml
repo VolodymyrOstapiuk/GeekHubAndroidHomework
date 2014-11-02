@@ -17,4 +17,6 @@
     <string name="nav_drawer_open">Category</string>
     <string name="title_activity_documentation_viewer">DocumentationViewerActivity</string>
     <bool name="isTablet">false</bool>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>
